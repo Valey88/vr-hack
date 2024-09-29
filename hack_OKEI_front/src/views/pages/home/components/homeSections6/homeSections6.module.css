@@ -1,0 +1,118 @@
+.homePage_sections6__container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.homePage_sections6__title {
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+}
+.homePage_sections6__container::before,
+.homePage_sections6__container::after {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 200px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.homePage_sections6__container::before {
+  height: 350px;
+  top: -50px;
+  left: -50px;
+  background-color: #f8738b;
+
+  filter: blur(40px);
+}
+
+.homePage_sections6__container::after {
+  height: 400px;
+  bottom: -190px;
+  right: -50px;
+  background-color: #d536bc;
+
+  filter: blur(40px);
+}
+.homePage_sections6__container__item_text {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.homePage_sections6__container__item_text_items {
+  width: max-content;
+  padding: 20px;
+  border-radius: 50px;
+  border: 2px solid #e4b7ff;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-top: 50px;
+}
+.homePage_sections6__container__item_block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 30%;
+  padding: 50px;
+  border-radius: 50px;
+  border: none;
+  background-color: #e4b7ff;
+}
+.homePage_sections6__container__item_block_text span {
+  font-size: 20px;
+  font-weight: normal;
+  color: #a236d5;
+  text-align: center;
+}
+.homePage_sections6__container__item_block_text p {
+  font-size: 20px;
+  font-weight: normal;
+  color: black;
+  text-align: center;
+}
+.homePage_sections6__container__item_block_text_social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+@media (max-width: 1024px) {
+  .homePage_sections6__container {
+    flex-direction: column;
+    grid-gap: 20px;
+  }
+  .homePage_sections6__container__item_block {
+    width: 325px;
+  }
+}
+@media (max-width: 768px) {
+  .homePage_sections6__title {
+    font-size: 26px;
+  }
+  .homePage_sections6__container__item_text_items {
+    width: 250px;
+    font-size: 15px;
+  }
+  .homePage_sections6__container__item_block_text span {
+    font-size: 15px;
+  }
+  .homePage_sections6__container__item_block_text p {
+    font-size: 15px;
+  }
+
+  .homePage_sections6__container__item_block {
+    width: 250px;
+    padding: 20px;
+  }
+  .homePage_sections6__container__item_text_items {
+    font-size: 12px;
+  }
+  .homePage_sections6__container__item_block_text_social {
+    font-size: 15px;
+  }
+}

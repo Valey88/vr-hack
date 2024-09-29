@@ -1,0 +1,5 @@
+enviroment: development
+
+http_port: 6060
+
+database_uri: postgres://postgres:1234@localhost:5432/database

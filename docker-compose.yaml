@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: "postgres:latest"
+    environment:
+      DATABASE_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: database
+    ports:
+      - 5432:5432
+
+    volumes:
+      - local-pgdata:/var/lib/postgresql/data
+
+  backand:
+    build: vr-hakaton/
+    ports:
+      - 6060:6060
+    depends_on:
+      - postgres
+    environment:
+      enviroment: development
+      http_port: 6060
+      database_uri: postgres://postgres:1234@postgres:5432/database
+
+  # frontend:
+  #   build: hack_OKEI_front/
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - backand
+  #   environment:
+  #     VITE_URL: http://backand:6060
+
+  bot:
+    build: vr_hack_bot/
+    depends_on:
+      - backand
+    environment:
+      API_URL: http://backand:6060/api/v1
+
+volumes:
+  local-pgdata:

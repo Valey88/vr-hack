@@ -1,0 +1,43 @@
+.homePage_sections5__title h2 {
+    font-size: 59px;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+  }
+  .homePage_sections5__title span {
+    font-size: 40px;
+    font-weight: bold;
+    color: #e1a2ff;
+    text-align: left;
+  }
+  
+  .homePage_sections5__title_discriptions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 50px;
+    border: 2px solid #e4b7ff;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+  }
+  .homePage_sections5__title_button {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-top: 50px;
+  }
+  @media (max-width: 768px) {
+    .homePage_sections5__title h2 {
+      font-size: 30px;
+    }
+    .homePage_sections5__title span {
+      font-size: 20px;
+    }
+    .homePage_sections5__title_discriptions {
+      font-size: 12px;
+    }
+  }
