@@ -14,7 +14,7 @@ const TestFormUploads = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // Инициализируем useForm
+  } = useForm();
   const theme = createTheme({
     palette: {
       primary: {
@@ -33,8 +33,11 @@ const TestFormUploads = () => {
       },
     },
   });
-  const onSubmit = async (data: any) => {
-    const requestUrl = `${url}/api/v1/team/update/${encodeURIComponent(data.id)}`; // Исправлено: используем шаблонные строки для подстановки id
+  const onSubmit = async (data) => {
+    // Указаны типы для data
+    const requestUrl = `${url}/api/v1/team/update/${encodeURIComponent(
+      data.id
+    )}`; // Исправлено: используем шаблонные строки для подстановки id
     await uploads({ id: data.id, link: data.link }); // Передаем id и link в uploads
     console.log(data); // Логируем данные для проверки
   };

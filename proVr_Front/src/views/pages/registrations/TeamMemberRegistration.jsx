@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   TextField,
   Button,
@@ -38,6 +38,8 @@ const theme = createTheme({
   },
 });
 
+// Определяем интерфейс для данных формы
+
 function TeamMemberRegistration() {
   const {
     fio,
@@ -64,11 +66,11 @@ function TeamMemberRegistration() {
   } = useForm();
   const registerOrder = useOrderStore((state) => state.registrationsOrder); // получаем метод из store
 
-  const onSubmit = async (data: any) => {
-    // Убедитесь, что все поля имеют правильные типы
+  const onSubmit = async (data) => {
+    // типизация onSubmit
     const formattedData = {
       fio: data.fio,
-      age: parseInt(data.age, 10), // Преобразуем в число
+      age: Number(data.age), // Преобразуем age в число
       role: data.role,
       phone_number: data.phone_number,
       email: data.email,
@@ -76,8 +78,8 @@ function TeamMemberRegistration() {
       track: data.track,
     };
 
-    console.log("Team Members Registered:", formattedData); // Логируем данные
-    await registrationsOrder(formattedData); // Вызываем метод для регистрации заказа
+    console.log("Team Members Registered:", formattedData);
+    await registerOrder(formattedData);
   };
 
   return (
