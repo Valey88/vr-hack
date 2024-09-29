@@ -3,9 +3,7 @@ const axios = require("axios");
 const { getOrders, updateOrder, deleteOrder } = require("./api/order/order");
 const { getTeams, updateTeam, deleteTeam } = require("./api/team/team");
 
-// const BOT_TOKEN = "your-bot-token-here";
 const BOT_TOKEN = "6706590553:AAHjcCNfUy4ZZvd_sRb4u5O7ZmHh6NZza5E";
-
 const bot = new Telegraf(BOT_TOKEN);
 
 // Состояние пользователя
@@ -67,7 +65,7 @@ bot.hears("Получить все команды", async (ctx) => {
 });
 
 // Добавить/Обновить заявку
-bot.hears("Обновить заявку", (ctx) => {
+bot.hears("Добавить/Обновить заявку", (ctx) => {
   userStates[ctx.from.id] = { action: "update_order", step: "choose_field" };
   ctx.reply(
     "Выберите поле для обновления:",
@@ -105,7 +103,7 @@ bot.action("update_order_confirm", (ctx) => {
 });
 
 // Добавить/Обновить команду
-bot.hears("Обновить команду", (ctx) => {
+bot.hears("Добавить/Обновить команду", (ctx) => {
   userStates[ctx.from.id] = { action: "update_team", step: "choose_field" };
   ctx.reply(
     "Выберите поле для обновления:",
@@ -181,11 +179,17 @@ bot.on("text", async (ctx) => {
     state.step = "awaiting_fields";
 
     if (state.fio) {
-      ctx.reply("Введите новое ФИО:");
+      ctx.reply(
+        "Введите новое ФИО (или оставьте пустым, если не нужно менять):"
+      );
     } else if (state.phone_number) {
-      ctx.reply("Введите новый телефон (Формат: +7XXXXXXXXXX):");
+      ctx.reply(
+        "Введите новый телефон (или оставьте пустым, если не нужно менять):"
+      );
     } else if (state.email) {
-      ctx.reply("Введите новый email:");
+      ctx.reply(
+        "Введите новый email (или оставьте пустым, если не нужно менять):"
+      );
     }
   } else if (state.step === "awaiting_fields") {
     const updateData = {};
