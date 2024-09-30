@@ -17,10 +17,10 @@ COPY . .
 RUN yarn build
 
 # Копируем собранный код в каталог /app/build
-RUN cp -r build /app/build
+RUN cp -r dist /app/build
 
 # Устанавливаем порт, на котором будет работать приложение
 EXPOSE 5173
 
 # Устанавливаем команду, которая будет запускать приложение
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
