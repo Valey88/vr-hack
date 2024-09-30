@@ -14,13 +14,13 @@ RUN yarn install
 COPY . .
 
 # Собираем React-приложение при помощи Yarn
-RUN yarn build
+# RUN yarn build
 
 # Копируем собранный код в каталог /app/build
-RUN cp -r dist /app/build
+# RUN cp -r dist /app/build
 
 # Устанавливаем порт, на котором будет работать приложение
-EXPOSE 5173
+EXPOSE 80
 
 # Устанавливаем команду, которая будет запускать приложение
-CMD ["yarn", "dev"]
+CMD ["yarn dev --host"]
