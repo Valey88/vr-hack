@@ -44,7 +44,7 @@ export const homePage = () => {
             <button
               onClick={(event) => {
                 event.preventDefault();
-                window.location.href = "/registration";
+                window.location.href = "/Задание для отборочного.pdf";
               }}
             >
               Скачать задание
