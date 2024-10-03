@@ -15,8 +15,9 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import useOrderStore from "../../../store/orderStore"; // добавлено для использования store
+import useOrderStore from "../../../store/orderStore";
+import { ToastContainer, toast } from "react-toastify"; // добавлено для уведомлений
+import "react-toastify/dist/ReactToastify.css"; // добавлено для использования store
 
 // Создаем новую тему с черно-фиолетовой и розовой цветовой гаммой
 const theme = createTheme({
@@ -78,12 +79,21 @@ function TeamMemberRegistration() {
       track: data.track,
     };
 
-    console.log("Team Members Registered:", formattedData);
-    await registerOrder(formattedData);
+    try {
+      console.log("Team Members Registered:", formattedData);
+      await registerOrder(formattedData);
+      // Уведомление об успехе должно быть после успешной регистрации
+      toast.success("Вы успешно зарегистрированы проверьте вашу почту!"); // уведомление об успехе
+    } catch (error) {
+      console.error("Ошибка регистрации:", error);
+      // Уведомление об ошибке должно быть в блоке catch
+      toast.error("Произошла ошибка при регистрации участника команды."); // уведомление об ошибке
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <Container
         maxWidth="sm"
         sx={{
