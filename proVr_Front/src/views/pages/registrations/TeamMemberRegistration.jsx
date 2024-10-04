@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import {
   TextField,
   Button,
@@ -14,6 +15,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
 import useOrderStore from "../../../store/orderStore";
 import { ToastContainer, toast } from "react-toastify"; // добавлено для уведомлений
@@ -66,6 +68,7 @@ function TeamMemberRegistration() {
     formState: { errors },
   } = useForm();
   const registerOrder = useOrderStore((state) => state.registrationsOrder); // получаем метод из store
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
     // типизация onSubmit
@@ -80,14 +83,16 @@ function TeamMemberRegistration() {
     };
 
     try {
-      console.log("Team Members Registered:", formattedData);
-      await registerOrder(formattedData);
-      // Уведомление об успехе должно быть после успешной регистрации
+      setLoading(true);
+      await registerOrder(formattedData); // получаем ответ от метода регистрации
       toast.success("Вы успешно зарегистрированы проверьте вашу почту!"); // уведомление об успехе
     } catch (error) {
-      console.error("Ошибка регистрации:", error);
-      // Уведомление об ошибке должно быть в блоке catch
-      toast.error("Произошла ошибка при регистрации участника команды."); // уведомление об ошибке
+      const errorMessage = String(error).split("Error: ")[1];
+      toast.error(
+        `Произошла ошибка при регистрации участника команды. Ошибка: ${errorMessage}`
+      ); // уведомление об ошибке
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,8 +106,27 @@ function TeamMemberRegistration() {
           padding: 3,
           borderRadius: 2,
           boxShadow: "0 3px 10px 2px rgba(106, 27, 154, 0.3)",
+          position: "relative", // добавлено для позиционирования оверлея
         }}
       >
+        {loading && ( // добавлено для отображения оверлея загрузки
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1,
+            }}
+          >
+            <CircularProgress color="secondary" /> {/* анимация загрузки */}
+          </Box>
+        )}
         <Typography variant="h4" component="h2" color="secondary" gutterBottom>
           Регистрация участника команды
         </Typography>
@@ -120,7 +144,7 @@ function TeamMemberRegistration() {
             label="ФИО"
             fullWidth
             margin="normal"
-            {...register("fio", { required: true })} // Поле "fio" правильно
+            {...register("fio", { required: true })}
             error={!!errors.fio}
             helperText={errors.fio && "Это поле обязательно"}
             onChange={(e) => setFio(e.target.value)}
@@ -130,7 +154,7 @@ function TeamMemberRegistration() {
             type="email"
             fullWidth
             margin="normal"
-            {...register("email", { required: true })} // Поле "email" правильно
+            {...register("email", { required: true })}
             error={!!errors.email}
             helperText={errors.email && "Это поле обязательно"}
             onChange={(e) => setEmail(e.target.value)}
@@ -140,7 +164,7 @@ function TeamMemberRegistration() {
             type="tel"
             fullWidth
             margin="normal"
-            {...register("phone_number", { required: true })} // Поле "phone_number" правильно
+            {...register("phone_number", { required: true })}
             error={!!errors.phone_number}
             helperText={errors.phone_number && "Это поле обязательно"}
             onChange={(e) => setPhoneNumber(e.target.value)}
@@ -150,13 +174,13 @@ function TeamMemberRegistration() {
             type="number"
             fullWidth
             margin="normal"
-            {...register("age", { required: true, min: 10, max: 100 })} // Поле "age" правильно
+            {...register("age", { required: true, min: 10, max: 100 })}
             error={!!errors.age}
             helperText={
               errors.age
                 ? errors.age.type === "required"
                   ? "Это поле обязательно"
-                  : "Возраст должен быть от 10 до 100 лет" // Исправлено на 10
+                  : "Возраст должен быть от 10 до 100 лет"
                 : ""
             }
             onChange={(e) => setAge(parseInt(e.target.value))}
@@ -166,13 +190,12 @@ function TeamMemberRegistration() {
             <Select
               labelId={`role-label`}
               label="Роль в команде"
-              {...register("role", { required: true })} // Поле "role" правильно
+              {...register("role", { required: true })}
               defaultValue=""
               onChange={(e) => setRole(e.target.value)}
             >
               <MenuItem value="maintainer">Руководитель команды</MenuItem>
-              <MenuItem value="captain">Капитан</MenuItem> // Исправлено на
-              "captain"
+              <MenuItem value="captain">Капитан</MenuItem>
               <MenuItem value="participant">Участник</MenuItem>
             </Select>
             {errors.role && (
@@ -181,12 +204,12 @@ function TeamMemberRegistration() {
               </Typography>
             )}
           </FormControl>
-          <FormControl fullWidth margin="normal" error={!!errors.tarck}>
-            <InputLabel id={`tarck-label`}>Выберите направление</InputLabel>
+          <FormControl fullWidth margin="normal" error={!!errors.track}>
+            <InputLabel id={`track-label`}>Выберите направление</InputLabel>
             <Select
               labelId={`track-label`}
               label="Выберите направление"
-              {...register("track", { required: true })} // Поле "track" правильно
+              {...register("track", { required: true })}
               defaultValue=""
               onChange={(e) => setTrack(e.target.value)}
             >
@@ -194,7 +217,7 @@ function TeamMemberRegistration() {
               <MenuItem value="3D">3D</MenuItem>
               <MenuItem value="VR">VR</MenuItem>
             </Select>
-            {errors.role && (
+            {errors.track && (
               <Typography color="error" variant="caption">
                 Это поле обязательно
               </Typography>
@@ -221,7 +244,13 @@ function TeamMemberRegistration() {
               </Typography>
             )}
           </Box>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={loading}
+          >
             Зарегистрироваться
           </Button>
         </form>

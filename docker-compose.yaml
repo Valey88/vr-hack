@@ -25,14 +25,14 @@ services:
       http_port: 6060
       database_uri: postgres://postgres:1234@postgres:5432/database
 
-  frontend:
-    build: proVr_Front/
-    ports:
-      - 80:80
-    depends_on:
-      - backand
-    environment:
-      VITE_URL: https://localhost:6060
+  # frontend:
+  #   build: proVr_Front/
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - backand
+  #   environment:
+  #     VITE_URL: http://localhost:6060
 
   bot:
     build: vr_hack_bot/
