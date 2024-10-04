@@ -7,10 +7,9 @@ import {
   createTheme,
 } from "@mui/material"; // Импортируем компоненты Material-UI
 import useOrderStore from "../../../../store/orderStore";
-import { url } from "../../../../store/url/url";
 import { ToastContainer, toast } from "react-toastify";
 const TestFormUploads = () => {
-  const { id, link, setId, setLink, uploads } = useOrderStore();
+  const { setId, setLink, uploads } = useOrderStore();
   const {
     register,
     handleSubmit,
@@ -35,21 +34,14 @@ const TestFormUploads = () => {
     },
   });
   const onSubmit = async (data) => {
-    // Указаны типы для data
-    const requestUrl = `${url}/api/v1/team/update/${encodeURIComponent(
-      data.id
-    )}`; // Исправлено: используем шаблонные строки для подстановки id
-    await uploads({ id: data.id, link: data.link }); // Передаем id и link в uploads
-    console.log(data); // Логируем данные для проверки
     try {
-      console.log("Team Members Registered:", formattedData);
-      await registerOrder(formattedData);
-      // Уведомление об успехе должно быть после успешной регистрации
+      await uploads({ id: data.id, link: data.link }); // Передаем id и link в uploads
       toast.success("Вы успешно отправили задание!"); // уведомление об успехе
     } catch (error) {
-      console.error("Ошибка отправки задания:", error);
-      // Уведомление об ошибке должно быть в блоке catch
-      toast.error("Произошла ошибка при отправке задания."); // уведомление об ошибке
+      const errorMessage = String(error).split("Error: ")[1];
+      toast.error(
+        `Произошла ошибка при отправке задания. Ошибка: ${errorMessage}`
+      ); // уведомление об ошибке
     }
   };
   return (

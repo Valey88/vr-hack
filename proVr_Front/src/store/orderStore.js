@@ -62,7 +62,7 @@ const useOrderStore = create(
       try {
         await axios.put(
           `${url}/api/v1/team/update/${id}`,
-          link, // Используем переданные данные
+          { link: link }, // Используем переданные данные
           {
             headers: {
               "Content-Type": "application/json",
@@ -74,7 +74,7 @@ const useOrderStore = create(
       } catch (error) {
         throw new Error(
           JSON.parse(error.request.response).error.message ||
-            "Ошибка при регистрации"
+            "Ошибка при прикреплении ссылки"
         );
       }
     },
