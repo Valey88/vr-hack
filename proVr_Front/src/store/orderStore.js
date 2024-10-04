@@ -40,18 +40,13 @@ const useOrderStore = create(
       }),
     registrationsOrder: async (data) => {
       try {
-        const response = await axios.post(
-          `${url}/api/v1/order/register`,
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }
-        );
+        await axios.post(`${url}/api/v1/order/register`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
         useOrderStore.getState().resetForm();
-        return response;
       } catch (error) {
         throw new Error(
           JSON.parse(error.request?.response).error.message ||
@@ -65,7 +60,7 @@ const useOrderStore = create(
       const { id, link } = data; // Используем переданные данные
 
       try {
-        const response = await axios.put(
+        await axios.put(
           `${url}/api/v1/team/update/${id}`,
           link, // Используем переданные данные
           {
