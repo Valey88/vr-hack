@@ -13,11 +13,11 @@ const indexRoute = createRoute({
   path: "/",
   component: homePage,
 });
-const registrationRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/registration",
-  component: TeamMemberRegistration,
-});
+// const registrationRoute = createRoute({
+//   getParentRoute: () => rootRoute,
+//   path: "/registration",
+//   component: TeamMemberRegistration,
+// });
 const uploadsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/upload",
@@ -26,6 +26,6 @@ const uploadsRoute = createRoute({
 
 export const routeTree = rootRoute.addChildren([
   indexRoute,
-  registrationRoute,
+  // registrationRoute,
   uploadsRoute,
 ]);
